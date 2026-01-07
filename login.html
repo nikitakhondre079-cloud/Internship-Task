@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-form {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="email"],
+        .login-form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-form">
+        <h2>User Form</h2>
+        <form id="userForm">
+            <input type="text" id="username" placeholder="User Name" required>
+            <input type="text" id="address" placeholder="Address" required>
+            <input type="number" id="age" placeholder="Age" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('userForm');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // prevent page reload
+
+            // Get input values
+            const username = document.getElementById('username').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Basic validation
+            if(username === "" || address === "" || age === "" || email === "") {
+                alert("All fields are required!");
+                return;
+            }
+
+            // Show pop-up with entered info
+            alert(
+                `User Name: ${username}\n` +
+                `Address: ${address}\n` +
+                `Age: ${age}\n` +
+                `Email: ${email}`
+            );
+
+            // Optionally, reset the form
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>

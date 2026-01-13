@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Profile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>User Profile</h2>
+  
+  <div id="userInfo">
+    <p><b>Name:</b> <span id="displayName"></span></p>
+    <p><b>Age:</b> <span id="displayAge"></span></p>
+    <p><b>Phone:</b> <span id="displayPhone"></span></p>
+    <p><b>Email:</b> <span id="displayEmail"></span></p>
+  </div>
+
+  <div id="editFields" style="display:none;">
+    <input type="text" id="editName"><br>
+    <input type="number" id="editAge"><br>
+    <input type="text" id="editPhone"><br>
+    <!-- Email is readonly -->
+    <input type="email" id="editEmail" readonly><br>
+  </div>
+
+  <button id="updateProfileBtn">Update Profile</button>
+  <button id="saveChangesBtn" style="display:none;">Update Changes</button>
+  <button id="changePasswordBtn">Change Password</button>
+  <button id="logoutBtn">Logout</button>
+
+  <!-- Password Modal -->
+  <div id="passwordModal" style="display:none;">
+    <h3>Change Password</h3>
+    <input type="password" id="newPassword" placeholder="Enter New Password"><br>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password"><br>
+    <label><input type="checkbox" id="confirmCheckbox"> I confirm to change my password</label><br>
+    <button id="submitPasswordBtn">Change Password</button>
+    <button id="closeModalBtn">Cancel</button>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

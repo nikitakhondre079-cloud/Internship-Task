@@ -1,0 +1,169 @@
+/* ====== General ====== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fef9f9; /* very light pinkish-white */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* ====== Forms ====== */
+form {
+    background-color: #fcfcfc; /* soft off-white */
+    padding: 20px 30px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background-color: #fffaf0; /* light cream */
+}
+
+form button {
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* ====== Links ====== */
+p {
+    text-align: center;
+}
+
+a {
+    color: #7fc8f8; /* light blue */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ====== User Info & Edit Fields ====== */
+#userInfo, #editFields {
+    background-color: #fdfdfd; /* very light grey */
+    padding: 20px 30px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    width: 320px;
+}
+
+#userInfo p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+#editFields input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background-color: #fffde7; /* very light yellow */
+}
+
+/* ====== Buttons (Light Theme) ====== */
+button {
+    padding: 10px;
+    margin: 5px 2px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Register/Login Buttons */
+form button {
+    background-color: #d0f4f7; /* light cyan */
+    color: #023047;
+}
+
+form button:hover {
+    background-color: #a9e4f5;
+}
+
+/* Profile Page Buttons */
+#updateProfileBtn { background-color: #ffe5d9; color: #9d0208; }
+#updateProfileBtn:hover { background-color: #ffd1c1; }
+
+#saveChangesBtn { background-color: #e0f7da; color: #1b4332; }
+#saveChangesBtn:hover { background-color: #c3f0b3; }
+
+#changePasswordBtn { background-color: #fff3b0; color: #665800; }
+#changePasswordBtn:hover { background-color: #fff89a; }
+
+#logoutBtn { background-color: #f0f0f0; color: #333; }
+#logoutBtn:hover { background-color: #e0e0e0; }
+
+/* ====== Modal ====== */
+#passwordModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fcfcfc; /* soft off-white */
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    z-index: 1000;
+    width: 320px;
+}
+
+#passwordModal input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: #fffde7; /* very light yellow */
+}
+
+#passwordModal button {
+    width: 48%;
+    margin: 5px 1%;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+#submitPasswordBtn { background-color: #c7f9cc; color: #023020; } /* light green */
+#submitPasswordBtn:hover { background-color: #a0f0a0; }
+
+#closeModalBtn { background-color: #ffc6ff; color: #6a0071; } /* light pink */
+#closeModalBtn:hover { background-color: #ff9cff; }
+
+/* ====== Responsive ====== */
+@media (max-width: 400px) {
+    form, #userInfo, #editFields, #passwordModal {
+        width: 90%;
+    }
+}

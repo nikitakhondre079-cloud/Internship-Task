@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>User Data</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadUserData()">
-<div class="container">
-    <h2>User Information</h2>
-    <div class="user-info" id="userData"></div>
-    <button onclick="logoutUser()">Logout</button>
+<body>
+
+<div class="container" id="userContainer">
+    <h2>User Profile</h2>
+
+    <div id="userForm" class="readonly">
+        <input type="text" id="uName" readonly placeholder="Name">
+        <input type="number" id="uAge" readonly placeholder="Age">
+        <input type="text" id="uPhone" readonly placeholder="Phone">
+        <input type="email" id="uEmail" readonly placeholder="Email">
+        <textarea id="uAddress" readonly placeholder="Address"></textarea>
+        <input type="number" id="uPincode" readonly placeholder="Pincode">
+        <input type="password" id="uPassword" readonly placeholder="Password">
+    </div>
+
+    <div class="btn-row">
+        <button id="updateProfileBtn">Update Profile</button>
+        <button id="saveChangesBtn" style="display:none;">Save Changes</button>
+        <button id="changePasswordBtn">Change Password</button>
+        <button id="logoutBtn">Logout</button>
+    </div>
 </div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal" id="passwordModal">
+    <div class="modal-content">
+        <h3>Change Password</h3>
+
+        <input type="password" id="newPassword" placeholder="New Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+
+        <label>
+            <input type="checkbox" id="confirmCheckbox">
+            I confirm to change password
+        </label>
+
+        <div class="error" id="passwordError"></div>
+
+        <button id="savePasswordBtn">Save</button>
+        <button id="closeModalBtn">Cancel</button>
+    </div>
+</div>
+
 <script src="script.js"></script>
+<script>
+window.onload = loadUserProfile;
+
+document.getElementById("updateProfileBtn").onclick = toggleEditProfile;
+document.getElementById("saveChangesBtn").onclick = saveProfileChanges;
+document.getElementById("changePasswordBtn").onclick = showPasswordModal;
+document.getElementById("closeModalBtn").onclick = closePasswordModal;
+document.getElementById("savePasswordBtn").onclick = changePassword;
+document.getElementById("logoutBtn").onclick = logoutUser;
+</script>
+
 </body>
 </html>

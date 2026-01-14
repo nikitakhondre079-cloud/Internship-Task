@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Register</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
     <h2>Register</h2>
-    <div class="error" id="errorMsg"></div>
-    <form onsubmit="registerUser(event)">
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="number" id="age" placeholder="Age">
-        <input type="text" id="phone" placeholder="Phone">
-        <input type="email" id="email" placeholder="Email" required>
-        <textarea id="address" placeholder="Address"></textarea>
-        <input type="number" id="pincode" placeholder="Pincode">
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+    <div class="error" id="registerError"></div>
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="number" id="age" placeholder="Age">
+    <input type="text" id="phone" placeholder="Phone">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="address" placeholder="Address"></textarea>
+    <input type="number" id="pincode" placeholder="Pincode">
+    <input type="password" id="password" placeholder="Password">
+    <button id="registerBtn">Register</button>
+    <p style="text-align:center; margin-top:10px;">Already have account? <a href="login.html">Login</a></p>
 </div>
+
 <script src="script.js"></script>
+<script>
+document.getElementById('registerBtn').addEventListener('click', function(){
+    registerUser();
+});
+</script>
 </body>
 </html>

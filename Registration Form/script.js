@@ -1,98 +1,149 @@
-// Register Page Logic
-function registerUser(e) {
-    e.preventDefault();
+// ---------- REGISTER ----------
+function registerUser(){
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const address = document.getElementById('address').value.trim();
+    const pincode = document.getElementById('pincode').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    let name = document.getElementById("name").value.trim();
-    let age = document.getElementById("age").value.trim();
-    let phone = document.getElementById("phone").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let address = document.getElementById("address").value.trim();
-    let pincode = document.getElementById("pincode").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let errorMsg = document.getElementById("errorMsg");
-
-    errorMsg.innerText = "";
-
-    if (!name || !email || !password) {
-        errorMsg.innerText = "Name, Email, and Password are required!";
+    if(!name || !email || !password){
+        document.getElementById('registerError').innerText = "Name, Email and Password are required!";
         return;
     }
 
-    // Fetch existing users
-    let users = JSON.parse(localStorage.getItem("users") || "[]");
+    let users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // Prevent duplicate email/phone
-    let exists = users.some(u => u.email === email || u.phone === phone);
-    if (exists) {
-        errorMsg.innerText = "User with this Email or Phone already exists!";
+    let userExists = users.some(u => 
+        u.email.trim().toLowerCase() === email || u.phone.trim() === phone
+    );
+
+    if(userExists){
+        document.getElementById('registerError').innerText = "User already exists!";
         return;
     }
 
-    // Save user
-    users.push({ name, age, phone, email, address, pincode, password });
-    localStorage.setItem("users", JSON.stringify(users));
+    users.push({name, age, phone, email, address, pincode, password});
+    localStorage.setItem('users', JSON.stringify(users));
 
-    // Redirect to login with pre-filled email/phone
-    localStorage.setItem("prefill", JSON.stringify({ email, phone }));
+    localStorage.setItem("autoFillEmail", email);
+    localStorage.setItem("autoFillPhone", phone);
+
+    alert("Registration Successful!");
     window.location.href = "login.html";
 }
 
-// Login Page Logic
-function loginUser(e) {
-    e.preventDefault();
+// ---------- LOGIN ----------
+function loginUser(){
+    const loginInput = document.getElementById('loginEmailPhone').value.trim();
+    const loginPass = document.getElementById('loginPassword').value.trim();
 
-    let input = document.getElementById("loginInput").value.trim();
-    let password = document.getElementById("loginPassword").value.trim();
-    let errorMsg = document.getElementById("loginError");
-    errorMsg.innerText = "";
-
-    if (!input || !password) {
-        errorMsg.innerText = "All fields are required!";
+    if(!loginInput || !loginPass){
+        document.getElementById('loginError').innerText = "All fields are required!";
         return;
     }
 
-    let users = JSON.parse(localStorage.getItem("users") || "[]");
-    let user = users.find(u => (u.email === input || u.phone === input) && u.password === password);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => 
+        (u.email.trim().toLowerCase() === loginInput.toLowerCase() || u.phone.trim() === loginInput)
+        && u.password === loginPass
+    );
 
-    if (!user) {
-        errorMsg.innerText = "Invalid credentials!";
+    if(user){
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        window.location.href = "user.html";
+    } else {
+        document.getElementById('loginError').innerText = "Invalid Credentials!";
+    }
+}
+
+// ---------- USER PROFILE ----------
+function loadUserProfile(){
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(user); // ✅ Debug: Check saved data
+    if(!user) window.location.href = "login.html";
+
+    document.getElementById('uName').value = user.name;
+    document.getElementById('uAge').value = user.age;
+    document.getElementById('uPhone').value = user.phone;
+    document.getElementById('uEmail').value = user.email;
+    document.getElementById('uAddress').value = user.address || ""; // Fix undefined
+    document.getElementById('uPincode').value = user.pincode;
+    document.getElementById('uPassword').value = user.password || ""; // Display password
+}
+
+function toggleEditProfile(){
+    document.getElementById('userForm').classList.remove('readonly');
+    ['uName','uAge','uPhone','uEmail','uAddress','uPincode'].forEach(id=>{
+        document.getElementById(id).removeAttribute('readonly');
+    });
+    document.getElementById('updateProfileBtn').style.display = "none";
+    document.getElementById('saveChangesBtn').style.display = "block";
+}
+
+function saveProfileChanges(){
+    const updatedUser = {
+        name: document.getElementById('uName').value.trim(),
+        age: document.getElementById('uAge').value.trim(),
+        phone: document.getElementById('uPhone').value.trim(),
+        email: document.getElementById('uEmail').value.trim().toLowerCase(),
+        address: document.getElementById('uAddress').value.trim(),
+        pincode: document.getElementById('uPincode').value.trim(),
+        password: JSON.parse(localStorage.getItem("currentUser")).password
+    };
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users = users.map(u => (u.email.trim().toLowerCase() === updatedUser.email ? updatedUser : u));
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+    alert("Profile Updated!");
+    window.location.reload();
+}
+
+// ---------- CHANGE PASSWORD ----------
+function showPasswordModal(){
+    document.getElementById('passwordModal').style.display = "flex";
+}
+
+function closePasswordModal(){
+    document.getElementById('passwordModal').style.display = "none";
+    document.getElementById('passwordError').innerText = "";
+    document.getElementById('newPassword').value = "";
+    document.getElementById('confirmPassword').value = "";
+    document.getElementById('confirmCheckbox').checked = false;
+}
+
+function changePassword(){
+    const newPass = document.getElementById('newPassword').value.trim();
+    const confirmPass = document.getElementById('confirmPassword').value.trim();
+    const checkbox = document.getElementById('confirmCheckbox').checked;
+
+    if(!checkbox){
+        document.getElementById('passwordError').innerText = "Please confirm to change password.";
+        return;
+    }
+    if(newPass !== confirmPass){
+        document.getElementById('passwordError').innerText = "Passwords do not match!";
         return;
     }
 
-    // Successful login
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    window.location.href = "user.html";
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    user.password = newPass;
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users = users.map(u => (u.email.trim().toLowerCase() === user.email.trim().toLowerCase() ? user : u));
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    alert("Password changed successfully!");
+    closePasswordModal();
+    loadUserProfile(); // Update password field
 }
 
-// Prefill login if redirected from signup
-function prefillLogin() {
-    let prefill = JSON.parse(localStorage.getItem("prefill") || "{}");
-    if (prefill.email || prefill.phone) {
-        document.getElementById("loginInput").value = prefill.email || prefill.phone;
-        localStorage.removeItem("prefill");
-    }
-}
-
-// User Page Logic
-function loadUserData() {
-    let user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
-    if (!user.email) {
-        window.location.href = "login.html"; // Redirect if not logged in
-        return;
-    }
-
-    document.getElementById("userData").innerHTML = `
-        <p><strong>Full Name:</strong> ${user.name}</p>
-        <p><strong>Age:</strong> ${user.age}</p>
-        <p><strong>Phone:</strong> ${user.phone}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Address:</strong> ${user.address}</p>
-        <p><strong>Pincode:</strong> ${user.pincode}</p>
-    `;
-}
-
-// Logout
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
+// ---------- LOGOUT ----------
+function logoutUser(){
+    localStorage.removeItem("currentUser");
     window.location.href = "login.html";
 }
